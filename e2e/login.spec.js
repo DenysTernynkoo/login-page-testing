@@ -181,4 +181,44 @@ test.describe('Login Page Tests', () => {
     await expect(page.locator('#email')).toHaveAttribute('type', 'email');
     await expect(page.locator('#password')).toHaveAttribute('type', 'password');
   });
+
+  test('should handle keyboard navigation', async ({ page }) => {
+    // Tab navigation
+    await page.keyboard.press('Tab');
+    await expect(page.locator('#email')).toBeFocused();
+    
+    await page.keyboard.press('Tab');
+    await expect(page.locator('#password')).toBeFocused();
+    
+    await page.keyboard.press('Tab');
+    await expect(page.locator('button[type="submit"]')).toBeFocused();
+  });
+
+  test('should submit form with Enter key', async ({ page }) => {
+    await page.fill('#email', 'test@example.com');
+    await page.fill('#password', 'password123');
+    
+    // Press Enter in password field
+    await page.locator('#password').press('Enter');
+    
+    // Check that form submits
+    await expect(page.locator('button[type="submit"]')).toHaveText('Signing In...');
+    await expect(page.locator('#successMessage')).toBeVisible({ timeout: 2000 });
+  });
+
+  test('should maintain input values after validation errors', async ({ page }) => {
+    const email = 'test@example.com';
+    const shortPassword = '123';
+    
+    await page.fill('#email', email);
+    await page.fill('#password', shortPassword);
+    await page.click('button[type="submit"]');
+    
+    // Check error appears
+    await expect(page.locator('#errorMessage')).toBeVisible();
+    
+    // Check values are maintained
+    await expect(page.locator('#email')).toHaveValue(email);
+    await expect(page.locator('#password')).toHaveValue(shortPassword);
+  });
 });
