@@ -1,23 +1,38 @@
 {
+  "name": "yoursite-web-app",
+  "version": "1.0.0",
+  "description": "Modern web application with comprehensive testing and glassmorphism design",
+  "main": "src/pages/index.html",
+  "keywords": ["web", "authentication", "modern-design", "responsive", "testing", "glassmorphism"],
+  "author": "YourSite Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/yoursite-web-app.git"
+  },
   "devDependencies": {
     "@playwright/test": "^1.54.1",
     "@types/node": "^24.0.14",
-    "cypress": "^14.5.2"
+    "cypress": "^14.5.2",
+    "serve": "^14.2.1"
   },
   "scripts": {
-    "test": "playwright test",
-    "test:ui": "playwright test --ui",
-    "test:functional": "playwright test login.spec.js",
-    "test:performance": "playwright test login-performance.spec.js",
-    "test:ux": "playwright test login-ux.spec.js",
-    "test:ux-basic": "node ux-test-basic.js",
-    "test:basic": "node basic-test.js",
-    "test:home": "playwright test home.spec.js",
-    "test:home-performance": "playwright test home-performance.spec.js",
-    "test:home-ux": "playwright test home-ux.spec.js",
-    "test:home-basic": "node test-home-basic.js",
-    "test:registration": "node test-registration-basic.js",
+    "test": "playwright test --config=config/playwright.config.js",
+    "test:ui": "playwright test --config=config/playwright.config.js --ui",
+    "test:functional": "playwright test --config=config/playwright.config.js login.spec.js",
+    "test:performance": "playwright test --config=config/playwright.config.js login-performance.spec.js",
+    "test:ux": "playwright test --config=config/playwright.config.js login-ux.spec.js",
+    "test:ux-basic": "node tests/unit/ux-test-basic.js",
+    "test:basic": "node tests/unit/basic-test.js",
+    "test:home": "playwright test --config=config/playwright.config.js home.spec.js",
+    "test:home-performance": "playwright test --config=config/playwright.config.js home-performance.spec.js",
+    "test:home-ux": "playwright test --config=config/playwright.config.js home-ux.spec.js",
+    "test:home-basic": "node tests/unit/test-home-basic.js",
+    "test:registration": "node tests/unit/test-registration-basic.js",
     "test:all-basic": "npm run test:basic && npm run test:home-basic && npm run test:registration",
-    "test:report": "playwright show-report"
+    "test:report": "playwright show-report",
+    "dev": "npx serve src/pages -l 3000",
+    "build": "echo 'Static site - no build step required'",
+    "start": "npm run dev"
   }
 }

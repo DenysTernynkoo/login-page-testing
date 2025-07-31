@@ -3,7 +3,7 @@ const path = require('path');
 
 // Simple test runner that validates the HTML structure
 function runBasicTests() {
-    const loginHtmlPath = path.join(__dirname, 'login.html');
+    const loginHtmlPath = path.join(__dirname, 'src/pages/login.html');
     
     if (!fs.existsSync(loginHtmlPath)) {
         console.log('❌ Test Failed: login.html file not found');

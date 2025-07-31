@@ -9,7 +9,7 @@ function runBasicTests() {
     
     // Test 1: Check if login.html exists
     try {
-        const loginPath = path.join(__dirname, 'login.html');
+        const loginPath = path.join(__dirname, 'src/pages/login.html');
         if (fs.existsSync(loginPath)) {
             console.log('✅ Test 1: login.html file exists');
             passed++;
@@ -23,7 +23,7 @@ function runBasicTests() {
     
     // Test 2: Check HTML structure
     try {
-        const html = fs.readFileSync('login.html', 'utf8');
+        const html = fs.readFileSync('src/pages/login.html', 'utf8');
         if (html.includes('form') && html.includes('email') && html.includes('password')) {
             console.log('✅ Test 2: HTML contains required form elements');
             passed++;
@@ -37,7 +37,7 @@ function runBasicTests() {
     
     // Test 3: Check JavaScript validation
     try {
-        const html = fs.readFileSync('login.html', 'utf8');
+        const html = fs.readFileSync('src/pages/login.html', 'utf8');
         if (html.includes('isValidEmail') && html.includes('showError')) {
             console.log('✅ Test 3: JavaScript validation functions present');
             passed++;
@@ -51,8 +51,8 @@ function runBasicTests() {
     
     // Test 4: Check test files exist
     try {
-        const functionalTests = fs.existsSync('e2e/login.spec.js');
-        const performanceTests = fs.existsSync('e2e/login-performance.spec.js');
+        const functionalTests = fs.existsSync('tests/e2e/login.spec.js');
+        const performanceTests = fs.existsSync('tests/e2e/login-performance.spec.js');
         
         if (functionalTests && performanceTests) {
             console.log('✅ Test 4: Test files created successfully');
@@ -81,7 +81,7 @@ function runBasicTests() {
     
     // Test 6: Count test cases in functional tests
     try {
-        const testContent = fs.readFileSync('e2e/login.spec.js', 'utf8');
+        const testContent = fs.readFileSync('tests/e2e/login.spec.js', 'utf8');
         const testCount = (testContent.match(/test\(/g) || []).length;
         
         if (testCount >= 16) {
@@ -97,7 +97,7 @@ function runBasicTests() {
     
     // Test 7: Count test cases in performance tests
     try {
-        const testContent = fs.readFileSync('e2e/login-performance.spec.js', 'utf8');
+        const testContent = fs.readFileSync('tests/e2e/login-performance.spec.js', 'utf8');
         const testCount = (testContent.match(/test\(/g) || []).length;
         
         if (testCount >= 10) {
@@ -113,7 +113,7 @@ function runBasicTests() {
     
     // Test 8: Check CSS styling
     try {
-        const html = fs.readFileSync('login.html', 'utf8');
+        const html = fs.readFileSync('src/pages/login.html', 'utf8');
         if (html.includes('gradient') && html.includes('login-container')) {
             console.log('✅ Test 8: CSS styling present');
             passed++;

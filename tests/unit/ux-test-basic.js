@@ -7,7 +7,7 @@ function runUXTests() {
     let failed = 0;
     
     try {
-        const html = fs.readFileSync('login.html', 'utf8');
+        const html = fs.readFileSync('src/pages/login.html', 'utf8');
         
         // Test 1: Visual Design Elements
         console.log('📱 Testing Visual Design & Layout...');
@@ -184,8 +184,8 @@ const score = runUXTests();
 
 // Also check if comprehensive UX test file exists
 console.log('\n🧪 Comprehensive UX Test Suite:');
-if (fs.existsSync('e2e/login-ux.spec.js')) {
-    const uxTestContent = fs.readFileSync('e2e/login-ux.spec.js', 'utf8');
+if (fs.existsSync('tests/e2e/login-ux.spec.js')) {
+    const uxTestContent = fs.readFileSync('tests/e2e/login-ux.spec.js', 'utf8');
     const testCount = (uxTestContent.match(/test\(/g) || []).length;
     console.log(`✅ Created: ${testCount} comprehensive UX tests in login-ux.spec.js`);
     console.log('   • Visual Design & Layout tests');

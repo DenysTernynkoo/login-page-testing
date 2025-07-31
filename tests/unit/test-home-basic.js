@@ -9,7 +9,7 @@ function runHomePageTests() {
     
     // Test 1: Check if index.html exists
     try {
-        const homePath = path.join(__dirname, 'index.html');
+        const homePath = path.join(process.cwd(), 'src/pages/index.html');
         if (fs.existsSync(homePath)) {
             console.log('✅ Test 1: index.html file exists');
             passed++;
@@ -23,7 +23,7 @@ function runHomePageTests() {
     
     // Test 2: Check HTML structure and navigation
     try {
-        const html = fs.readFileSync('index.html', 'utf8');
+        const html = fs.readFileSync('src/pages/index.html', 'utf8');
         if (html.includes('navbar') && html.includes('nav-links') && html.includes('logo')) {
             console.log('✅ Test 2: Navigation structure present');
             passed++;
@@ -37,7 +37,7 @@ function runHomePageTests() {
     
     // Test 3: Check hero section
     try {
-        const html = fs.readFileSync('index.html', 'utf8');
+        const html = fs.readFileSync('src/pages/index.html', 'utf8');
         if (html.includes('hero-section') && html.includes('Welcome to Your Site') && html.includes('hero-buttons')) {
             console.log('✅ Test 3: Hero section complete');
             passed++;
@@ -51,7 +51,7 @@ function runHomePageTests() {
     
     // Test 4: Check feature cards
     try {
-        const html = fs.readFileSync('index.html', 'utf8');
+        const html = fs.readFileSync('src/pages/index.html', 'utf8');
         const featureCardCount = (html.match(/feature-card/g) || []).length;
         if (featureCardCount >= 6 && html.includes('features-grid')) {
             console.log('✅ Test 4: Six feature cards present');
@@ -66,7 +66,7 @@ function runHomePageTests() {
     
     // Test 5: Check statistics section
     try {
-        const html = fs.readFileSync('index.html', 'utf8');
+        const html = fs.readFileSync('src/pages/index.html', 'utf8');
         if (html.includes('stats-section') && html.includes('stat-number') && html.includes('data-target')) {
             console.log('✅ Test 5: Statistics section with animations');
             passed++;
@@ -80,7 +80,7 @@ function runHomePageTests() {
     
     // Test 6: Check JavaScript functionality
     try {
-        const html = fs.readFileSync('index.html', 'utf8');
+        const html = fs.readFileSync('src/pages/index.html', 'utf8');
         if (html.includes('animateCounter') && html.includes('IntersectionObserver') && html.includes('smoothing')) {
             console.log('✅ Test 6: Interactive JavaScript features present');
             passed++;
@@ -94,7 +94,7 @@ function runHomePageTests() {
     
     // Test 7: Check links to other pages
     try {
-        const html = fs.readFileSync('index.html', 'utf8');
+        const html = fs.readFileSync('src/pages/index.html', 'utf8');
         const loginLinks = (html.match(/login\.html/g) || []).length;
         const registerLinks = (html.match(/register\.html/g) || []).length;
         
@@ -111,7 +111,7 @@ function runHomePageTests() {
     
     // Test 8: Check responsive design elements
     try {
-        const html = fs.readFileSync('index.html', 'utf8');
+        const html = fs.readFileSync('src/pages/index.html', 'utf8');
         if (html.includes('@media') && html.includes('viewport') && html.includes('flex')) {
             console.log('✅ Test 8: Responsive design CSS present');
             passed++;
@@ -125,7 +125,7 @@ function runHomePageTests() {
     
     // Test 9: Check glassmorphism and modern design
     try {
-        const html = fs.readFileSync('index.html', 'utf8');
+        const html = fs.readFileSync('src/pages/index.html', 'utf8');
         if (html.includes('backdrop-filter') && html.includes('blur') && html.includes('rgba')) {
             console.log('✅ Test 9: Modern glassmorphism design effects');
             passed++;
@@ -139,7 +139,7 @@ function runHomePageTests() {
     
     // Test 10: Check animations and transitions
     try {
-        const html = fs.readFileSync('index.html', 'utf8');
+        const html = fs.readFileSync('src/pages/index.html', 'utf8');
         if (html.includes('animation') && html.includes('fadeIn') && html.includes('transition')) {
             console.log('✅ Test 10: CSS animations and transitions present');
             passed++;
@@ -153,7 +153,7 @@ function runHomePageTests() {
     
     // Test 11: Check footer
     try {
-        const html = fs.readFileSync('index.html', 'utf8');
+        const html = fs.readFileSync('src/pages/index.html', 'utf8');
         if (html.includes('footer') && html.includes('footer-links') && html.includes('2025')) {
             console.log('✅ Test 11: Footer with links and copyright');
             passed++;
@@ -167,9 +167,9 @@ function runHomePageTests() {
     
     // Test 12: Check test files exist
     try {
-        const homeTests = fs.existsSync('e2e/home.spec.js');
-        const homePerformanceTests = fs.existsSync('e2e/home-performance.spec.js');
-        const homeUXTests = fs.existsSync('e2e/home-ux.spec.js');
+        const homeTests = fs.existsSync('tests/e2e/home.spec.js');
+        const homePerformanceTests = fs.existsSync('tests/e2e/home-performance.spec.js');
+        const homeUXTests = fs.existsSync('tests/e2e/home-ux.spec.js');
         
         if (homeTests && homePerformanceTests && homeUXTests) {
             console.log('✅ Test 12: All home page test files created');
@@ -184,7 +184,7 @@ function runHomePageTests() {
     
     // Test 13: Count functional tests
     try {
-        const testContent = fs.readFileSync('e2e/home.spec.js', 'utf8');
+        const testContent = fs.readFileSync('tests/e2e/home.spec.js', 'utf8');
         const testCount = (testContent.match(/test\(/g) || []).length;
         
         if (testCount >= 20) {
@@ -200,7 +200,7 @@ function runHomePageTests() {
     
     // Test 14: Count performance tests
     try {
-        const testContent = fs.readFileSync('e2e/home-performance.spec.js', 'utf8');
+        const testContent = fs.readFileSync('tests/e2e/home-performance.spec.js', 'utf8');
         const testCount = (testContent.match(/test\(/g) || []).length;
         
         if (testCount >= 15) {
@@ -216,7 +216,7 @@ function runHomePageTests() {
     
     // Test 15: Count UX tests
     try {
-        const testContent = fs.readFileSync('e2e/home-ux.spec.js', 'utf8');
+        const testContent = fs.readFileSync('tests/e2e/home-ux.spec.js', 'utf8');
         const testCount = (testContent.match(/test\(/g) || []).length;
         
         if (testCount >= 25) {
@@ -232,7 +232,7 @@ function runHomePageTests() {
     
     // Test 16: Check emoji icons
     try {
-        const html = fs.readFileSync('index.html', 'utf8');
+        const html = fs.readFileSync('src/pages/index.html', 'utf8');
         const emojiIcons = ['🚀', '🔒', '📱', '🎨', '⚡', '🌟'];
         const allIconsPresent = emojiIcons.every(icon => html.includes(icon));
         
@@ -249,8 +249,8 @@ function runHomePageTests() {
     
     // Test 17: Check consistent gradient with other pages
     try {
-        const homeHtml = fs.readFileSync('index.html', 'utf8');
-        const loginHtml = fs.readFileSync('login.html', 'utf8');
+        const homeHtml = fs.readFileSync('src/pages/index.html', 'utf8');
+        const loginHtml = fs.readFileSync('src/pages/login.html', 'utf8');
         
         const homeGradient = homeHtml.includes('667eea') && homeHtml.includes('764ba2');
         const loginGradient = loginHtml.includes('667eea') && loginHtml.includes('764ba2');
@@ -268,7 +268,7 @@ function runHomePageTests() {
     
     // Test 18: Check accessibility features
     try {
-        const html = fs.readFileSync('index.html', 'utf8');
+        const html = fs.readFileSync('src/pages/index.html', 'utf8');
         if (html.includes('<nav>') && html.includes('<main>') && html.includes('<footer>') && html.includes('alt=')) {
             console.log('✅ Test 18: Semantic HTML and accessibility features');
             passed++;
@@ -291,7 +291,7 @@ function runHomePageTests() {
     console.log('\n📊 Home Page Feature Analysis:');
     
     try {
-        const html = fs.readFileSync('index.html', 'utf8');
+        const html = fs.readFileSync('src/pages/index.html', 'utf8');
         
         // Count features
         const navLinks = (html.match(/nav-links.*?href/g) || []).length;

@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-const homePagePath = 'file:///mnt/c/Users/Denya/index.html';
+const homePagePath = 'file:///mnt/c/Users/Denya/src/pages/index.html';
 
 test.describe('Home Page UX Tests', () => {
   test.beforeEach(async ({ page }) => {
