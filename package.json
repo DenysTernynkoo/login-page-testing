@@ -12,6 +12,12 @@
     "test:ux": "playwright test login-ux.spec.js",
     "test:ux-basic": "node ux-test-basic.js",
     "test:basic": "node basic-test.js",
+    "test:home": "playwright test home.spec.js",
+    "test:home-performance": "playwright test home-performance.spec.js",
+    "test:home-ux": "playwright test home-ux.spec.js",
+    "test:home-basic": "node test-home-basic.js",
+    "test:registration": "node test-registration-basic.js",
+    "test:all-basic": "npm run test:basic && npm run test:home-basic && npm run test:registration",
     "test:report": "playwright show-report"
   }
 }

@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Create Account</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .register-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .register-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .register-header h1 {
+            color: #333;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .register-header p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e1e1e1;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group input.error {
+            border-color: #e74c3c;
+        }
+
+        .form-group input.success {
+            border-color: #27ae60;
+        }
+
+        .register-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .register-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .register-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .login-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message, .field-error {
+            color: #e74c3c;
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+
+        .success-message {
+            color: #27ae60;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .password-strength {
+            margin-top: 0.25rem;
+            font-size: 0.8rem;
+        }
+
+        .strength-weak { color: #e74c3c; }
+        .strength-medium { color: #f39c12; }
+        .strength-strong { color: #27ae60; }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            margin-right: 0.5rem;
+            margin-top: 0.2rem;
+            width: auto;
+        }
+
+        .checkbox-group label {
+            font-size: 0.9rem;
+            line-height: 1.4;
+            margin-bottom: 0;
+        }
+
+        .checkbox-group a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .checkbox-group a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <div class="register-header">
+            <h1>Create Account</h1>
+            <p>Join us today! Please fill in your details</p>
+        </div>
+        
+        <form id="registerForm">
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" name="firstName" required>
+                <div class="field-error" id="firstNameError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" name="lastName" required>
+                <div class="field-error" id="lastNameError"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required>
+                <div class="field-error" id="emailError"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+                <div class="password-strength" id="passwordStrength"></div>
+                <div class="field-error" id="passwordError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+                <div class="field-error" id="confirmPasswordError"></div>
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="terms" name="terms" required>
+                <label for="terms">
+                    I agree to the <a href="#" onclick="showTerms()">Terms of Service</a> 
+                    and <a href="#" onclick="showPrivacy()">Privacy Policy</a>
+                </label>
+            </div>
+            
+            <button type="submit" class="register-btn">Create Account</button>
+            
+            <div class="error-message" id="errorMessage"></div>
+            <div class="success-message" id="successMessage"></div>
+        </form>
+        
+        <div class="login-link">
+            <a href="login.html">Already have an account? Sign in</a>
+        </div>
+        
+        <div class="login-link" style="margin-top: 0.5rem;">
+            <a href="index.html">← Back to Home</a>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('registerForm');
+        const fields = {
+            firstName: document.getElementById('firstName'),
+            lastName: document.getElementById('lastName'),
+            email: document.getElementById('email'),
+            password: document.getElementById('password'),
+            confirmPassword: document.getElementById('confirmPassword'),
+            terms: document.getElementById('terms')
+        };
+
+        const errors = {
+            firstName: document.getElementById('firstNameError'),
+            lastName: document.getElementById('lastNameError'),
+            email: document.getElementById('emailError'),
+            password: document.getElementById('passwordError'),
+            confirmPassword: document.getElementById('confirmPasswordError')
+        };
+
+        const passwordStrength = document.getElementById('passwordStrength');
+        const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+
+        // Real-time validation
+        fields.firstName.addEventListener('blur', () => validateField('firstName'));
+        fields.lastName.addEventListener('blur', () => validateField('lastName'));
+        fields.email.addEventListener('blur', () => validateField('email'));
+        fields.password.addEventListener('input', () => {
+            checkPasswordStrength();
+            if (fields.confirmPassword.value) {
+                validateField('confirmPassword');
+            }
+        });
+        fields.confirmPassword.addEventListener('blur', () => validateField('confirmPassword'));
+
+        function validateField(fieldName) {
+            const field = fields[fieldName];
+            const error = errors[fieldName];
+            let isValid = true;
+            let message = '';
+
+            switch (fieldName) {
+                case 'firstName':
+                case 'lastName':
+                    if (!field.value.trim()) {
+                        message = `${fieldName === 'firstName' ? 'First' : 'Last'} name is required`;
+                        isValid = false;
+                    } else if (field.value.trim().length < 2) {
+                        message = `${fieldName === 'firstName' ? 'First' : 'Last'} name must be at least 2 characters`;
+                        isValid = false;
+                    }
+                    break;
+
+                case 'email':
+                    if (!field.value.trim()) {
+                        message = 'Email is required';
+                        isValid = false;
+                    } else if (!isValidEmail(field.value)) {
+                        message = 'Please enter a valid email address';
+                        isValid = false;
+                    }
+                    break;
+
+                case 'password':
+                    if (!field.value) {
+                        message = 'Password is required';
+                        isValid = false;
+                    } else if (field.value.length < 8) {
+                        message = 'Password must be at least 8 characters long';
+                        isValid = false;
+                    } else if (!isStrongPassword(field.value)) {
+                        message = 'Password must contain uppercase, lowercase, number, and special character';
+                        isValid = false;
+                    }
+                    break;
+
+                case 'confirmPassword':
+                    if (!field.value) {
+                        message = 'Please confirm your password';
+                        isValid = false;
+                    } else if (field.value !== fields.password.value) {
+                        message = 'Passwords do not match';
+                        isValid = false;
+                    }
+                    break;
+            }
+
+            if (isValid) {
+                field.classList.remove('error');
+                field.classList.add('success');
+                error.style.display = 'none';
+            } else {
+                field.classList.remove('success');
+                field.classList.add('error');
+                error.textContent = message;
+                error.style.display = 'block';
+            }
+
+            return isValid;
+        }
+
+        function checkPasswordStrength() {
+            const password = fields.password.value;
+            const strength = getPasswordStrength(password);
+            
+            passwordStrength.textContent = strength.text;
+            passwordStrength.className = `password-strength ${strength.class}`;
+        }
+
+        function getPasswordStrength(password) {
+            if (password.length === 0) {
+                return { text: '', class: '' };
+            }
+
+            let score = 0;
+            if (password.length >= 8) score++;
+            if (/[a-z]/.test(password)) score++;
+            if (/[A-Z]/.test(password)) score++;
+            if (/[0-9]/.test(password)) score++;
+            if (/[^a-zA-Z0-9]/.test(password)) score++;
+
+            if (score < 3) {
+                return { text: 'Weak password', class: 'strength-weak' };
+            } else if (score < 5) {
+                return { text: 'Medium strength', class: 'strength-medium' };
+            } else {
+                return { text: 'Strong password', class: 'strength-strong' };
+            }
+        }
+
+        function isStrongPassword(password) {
+            return password.length >= 8 &&
+                   /[a-z]/.test(password) &&
+                   /[A-Z]/.test(password) &&
+                   /[0-9]/.test(password) &&
+                   /[^a-zA-Z0-9]/.test(password);
+        }
+
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Hide previous messages
+            errorMessage.style.display = 'none';
+            successMessage.style.display = 'none';
+
+            // Validate all fields
+            const validations = [
+                validateField('firstName'),
+                validateField('lastName'),
+                validateField('email'),
+                validateField('password'),
+                validateField('confirmPassword')
+            ];
+
+            const isFormValid = validations.every(v => v);
+
+            // Check terms acceptance
+            if (!fields.terms.checked) {
+                showError('Please accept the Terms of Service and Privacy Policy');
+                return;
+            }
+
+            if (!isFormValid) {
+                showError('Please fix the errors above');
+                return;
+            }
+
+            // Simulate registration process
+            const registerBtn = document.querySelector('.register-btn');
+            registerBtn.textContent = 'Creating Account...';
+            registerBtn.disabled = true;
+
+            setTimeout(() => {
+                // Reset button
+                registerBtn.textContent = 'Create Account';
+                registerBtn.disabled = false;
+
+                // Show success message
+                showSuccess('Account created successfully! Redirecting to login...');
+                
+                // In a real application, you would send the data to your server
+                const formData = {
+                    firstName: fields.firstName.value,
+                    lastName: fields.lastName.value,
+                    email: fields.email.value,
+                    password: fields.password.value
+                };
+                console.log('Registration attempt:', formData);
+
+                // Simulate redirect to login page
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 2000);
+            }, 1500);
+        });
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+        }
+
+        function showSuccess(message) {
+            successMessage.textContent = message;
+            successMessage.style.display = 'block';
+        }
+
+        function showTerms() {
+            alert('Terms of Service would be displayed here');
+        }
+
+        function showPrivacy() {
+            alert('Privacy Policy would be displayed here');
+        }
+    </script>
+</body>
+</html>
