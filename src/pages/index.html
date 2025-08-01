@@ -336,12 +336,11 @@
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="logo">YourSite</a>
-            <div class="nav-links">
+            <div class="nav-links" id="navLinks">
                 <a href="index.html">Home</a>
                 <a href="#features">Features</a>
                 <a href="#about">About</a>
-                <a href="login.html" class="btn-primary">Sign In</a>
-                <a href="register.html">Sign Up</a>
+                <!-- Auth links will be populated by JavaScript -->
             </div>
         </div>
     </nav>
@@ -563,6 +562,75 @@
 
         // Initialize welcome message
         showWelcomeMessage();
+
+        // Authentication functions
+        function checkAuthStatus() {
+            const token = localStorage.getItem('authToken');
+            const user = localStorage.getItem('user');
+            const navLinks = document.getElementById('navLinks');
+            
+            if (token && user) {
+                // User is logged in
+                const userData = JSON.parse(user);
+                
+                // Update navigation for logged-in user
+                navLinks.innerHTML += `
+                    <span style="color: white; margin-right: 1rem;">Welcome, ${userData.firstName}!</span>
+                    <a href="#" onclick="logout()" class="btn-primary">Sign Out</a>
+                `;
+                
+                // Update hero section for logged-in user
+                const heroSubtitle = document.querySelector('.hero-subtitle');
+                heroSubtitle.innerHTML = `Welcome back, ${userData.firstName}! You're successfully logged into your account. Explore all the features we have to offer.`;
+                
+                const heroButtons = document.querySelector('.hero-buttons');
+                heroButtons.innerHTML = `
+                    <a href="#" onclick="showProfile()" class="btn btn-primary">View Profile</a>
+                    <a href="#features" class="btn btn-secondary">Explore Features</a>
+                `;
+            } else {
+                // User is not logged in
+                navLinks.innerHTML += `
+                    <a href="login.html" class="btn-primary">Sign In</a>
+                    <a href="register.html">Sign Up</a>
+                `;
+            }
+        }
+
+        function logout() {
+            // Send logout request to backend
+            fetch('/api/auth/logout', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Logout response:', data);
+            })
+            .catch(error => {
+                console.error('Logout error:', error);
+            })
+            .finally(() => {
+                // Clear local storage regardless of backend response
+                localStorage.removeItem('authToken');
+                localStorage.removeItem('user');
+                
+                // Reload page to update UI
+                window.location.reload();
+            });
+        }
+
+        function showProfile() {
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            alert(`Profile Information:\n\nName: ${user.firstName} ${user.lastName}\nEmail: ${user.email}\nMember since: ${new Date(user.createdAt).toLocaleDateString()}`);
+        }
+
+        // Check authentication status on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAuthStatus();
+        });
     </script>
 </body>
 </html>

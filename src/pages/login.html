@@ -182,22 +182,47 @@
                 return;
             }
             
-            // Simulate login process
+            // Send login request to backend
             const loginBtn = document.querySelector('.login-btn');
             loginBtn.textContent = 'Signing In...';
             loginBtn.disabled = true;
             
-            setTimeout(() => {
+            fetch('/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password })
+            })
+            .then(response => response.json())
+            .then(data => {
                 // Reset button
                 loginBtn.textContent = 'Sign In';
                 loginBtn.disabled = false;
                 
-                // For demo purposes, show success message
-                showSuccess('Login successful! Redirecting...');
+                if (data.success) {
+                    // Store JWT token
+                    localStorage.setItem('authToken', data.data.token);
+                    localStorage.setItem('user', JSON.stringify(data.data.user));
+                    
+                    showSuccess('Login successful! Redirecting...');
+                    
+                    // Redirect to home page after success
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 1500);
+                } else {
+                    showError(data.message || 'Login failed. Please try again.');
+                }
+            })
+            .catch(error => {
+                // Reset button
+                loginBtn.textContent = 'Sign In';
+                loginBtn.disabled = false;
                 
-                // In a real application, you would send the data to your server
-                console.log('Login attempt:', { email, password });
-            }, 1500);
+                console.error('Login error:', error);
+                showError('Network error. Please check your connection and try again.');
+            });
         });
         
         function showError(message) {

@@ -400,33 +400,70 @@
                 return;
             }
 
-            // Simulate registration process
+            // Send registration request to backend
             const registerBtn = document.querySelector('.register-btn');
             registerBtn.textContent = 'Creating Account...';
             registerBtn.disabled = true;
 
-            setTimeout(() => {
+            const formData = {
+                firstName: fields.firstName.value,
+                lastName: fields.lastName.value,
+                email: fields.email.value,
+                password: fields.password.value,
+                confirmPassword: fields.confirmPassword.value
+            };
+
+            fetch('/api/auth/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
                 // Reset button
                 registerBtn.textContent = 'Create Account';
                 registerBtn.disabled = false;
 
-                // Show success message
-                showSuccess('Account created successfully! Redirecting to login...');
+                if (data.success) {
+                    // Store JWT token (user is automatically logged in after registration)
+                    localStorage.setItem('authToken', data.data.token);
+                    localStorage.setItem('user', JSON.stringify(data.data.user));
+                    
+                    showSuccess('Account created successfully! Redirecting...');
+                    
+                    // Redirect to home page after successful registration
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 2000);
+                } else {
+                    // Handle validation errors
+                    if (data.errors && Array.isArray(data.errors)) {
+                        // Show field-specific errors
+                        data.errors.forEach(error => {
+                            const field = error.path || error.param;
+                            const errorElement = document.getElementById(`${field}Error`);
+                            if (errorElement) {
+                                errorElement.textContent = error.msg || error.message;
+                                errorElement.style.display = 'block';
+                                fields[field]?.classList.add('error');
+                            }
+                        });
+                        showError('Please fix the errors above');
+                    } else {
+                        showError(data.message || 'Registration failed. Please try again.');
+                    }
+                }
+            })
+            .catch(error => {
+                // Reset button
+                registerBtn.textContent = 'Create Account';
+                registerBtn.disabled = false;
                 
-                // In a real application, you would send the data to your server
-                const formData = {
-                    firstName: fields.firstName.value,
-                    lastName: fields.lastName.value,
-                    email: fields.email.value,
-                    password: fields.password.value
-                };
-                console.log('Registration attempt:', formData);
-
-                // Simulate redirect to login page
-                setTimeout(() => {
-                    window.location.href = 'login.html';
-                }, 2000);
-            }, 1500);
+                console.error('Registration error:', error);
+                showError('Network error. Please check your connection and try again.');
+            });
         });
 
         function showError(message) {
