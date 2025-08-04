@@ -15,7 +15,9 @@
     "@types/node": "^24.0.14",
     "concurrently": "^8.2.2",
     "cypress": "^14.5.2",
-    "serve": "^14.2.1"
+    "serve": "^14.2.1",
+    "pngjs": "^7.0.0",
+    "pixelmatch": "^5.3.0"
   },
   "scripts": {
     "test": "playwright test --config=config/playwright.config.js",
@@ -38,6 +40,13 @@
     "test:integration": "node tests/integration/backend-integration.test.js",
     "test:full": "npm run test:all-security && npm run test:integration",
     "test:report": "playwright show-report",
+    "test:ui-comprehensive": "node tests/ui/ui-comprehensive-tester.js",
+    "test:ui-visual": "node tests/ui/visual-regression-tester.js",
+    "test:ui-visual-update": "node tests/ui/visual-regression-tester.js --update-baselines",
+    "test:ui-all": "node tests/ui/ui-test-runner.js",
+    "test:ui-all-browsers": "node tests/ui/ui-test-runner.js --all-browsers",
+    "test:ui-no-visual": "node tests/ui/ui-test-runner.js --no-visual",
+    "test:ui-quick": "node tests/ui/ui-test-runner.js --no-visual --no-report",
     "backend:install": "cd backend && npm install",
     "backend:dev": "cd backend && npm run dev",
     "backend:start": "cd backend && npm start",
