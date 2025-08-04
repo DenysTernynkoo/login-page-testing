@@ -9,11 +9,11 @@ This checklist ensures comprehensive testing coverage across all pages and featu
 
 ### Visual Design & Layout
 
-| Item | Test Description | Expected Result | Status | Notes |
-|------|------------------|-----------------|--------|-------|
-| HD-01 | Gradient Background | Consistent purple gradient (#667eea to #764ba2) | ☐ | |
-| HD-02 | Navigation Bar | Fixed position with glassmorphism effect | ☐ | |
-| HD-03 | Logo | "YourSite" visible and clickable | ☐ | |
+| Item | Test Description | Steps to Test | Expected Result | Status | Notes |
+|------|------------------|---------------|-----------------|--------|-------|
+| HD-01 | Gradient Background | 1. Navigate to home page<br/>2. Inspect body element<br/>3. Check background CSS | Consistent purple gradient (#667eea to #764ba2) | ☐ | |
+| HD-02 | Navigation Bar | 1. Load home page<br/>2. Scroll page up/down<br/>3. Verify navbar stays fixed | Fixed position with glassmorphism effect | ☐ | |
+| HD-03 | Logo | 1. Locate "YourSite" logo<br/>2. Verify visibility<br/>3. Click to test functionality | "YourSite" visible and clickable | ☐ | |
 | HD-04 | Typography | Hero title large and readable, proper hierarchy | ☐ | |
 | HD-05 | Spacing | Consistent padding and margins throughout | ☐ | |
 | HD-06 | Colors | White text on gradient background for contrast | ☐ | |
